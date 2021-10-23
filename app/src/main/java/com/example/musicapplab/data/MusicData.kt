@@ -6,9 +6,12 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import com.squareup.moshi.addAdapter
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import javax.inject.Inject
 
-object MusicDataUtil {
-    suspend fun getListOfSongs(context: Context): List<Song>? {
+class MusicDataUtil @Inject constructor(
+    private val context: Context
+) {
+    suspend fun getListOfSongs(): List<Song>? {
         val moshi = Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
             .build()

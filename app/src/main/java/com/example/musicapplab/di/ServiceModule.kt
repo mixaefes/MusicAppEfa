@@ -1,6 +1,7 @@
 package com.example.musicapplab.di
 
 import android.content.Context
+import com.example.musicapplab.data.MusicDataUtil
 import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.audio.AudioAttributes
@@ -17,6 +18,11 @@ import dagger.hilt.android.scopes.ServiceScoped
 @Module
 @InstallIn(ServiceComponent::class)
 object ServiceModule {
+    @ServiceScoped
+    @Provides
+    fun provideMusicData(@ApplicationContext context:Context) = MusicDataUtil(context
+    )
+
     @ServiceScoped
     @Provides
     fun provideAudioAttributes() = AudioAttributes.Builder()

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MusicAppLab</string>
+    <string name="channel_id">music_channel</string>
 </resources>
