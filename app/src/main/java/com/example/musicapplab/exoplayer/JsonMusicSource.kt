@@ -57,7 +57,7 @@ class JsonMusicSource @Inject constructor(
             .build()
         MediaBrowserCompat.MediaItem(desc, FLAG_PLAYABLE)
 
-    }
+    }.toMutableList()
 
     private val onReadyListeners = mutableListOf<(Boolean) -> Unit>()
     private var state: State = STATE_CREATED
