@@ -1,10 +1,9 @@
-package com.example.musicapplab
+package com.example.musicapplab.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import com.bumptech.glide.RequestManager
-import com.example.musicapplab.data.MusicDataUtil
+import com.example.musicapplab.R
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
