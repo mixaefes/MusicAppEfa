@@ -8,6 +8,7 @@ import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI
 import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_ARTIST
 import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_ART_URI
 import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_AUTHOR
+import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_MEDIA_ID
 import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_MEDIA_URI
 import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_TITLE
 import androidx.core.net.toUri
@@ -24,11 +25,13 @@ class JsonMusicSource @Inject constructor(
     private val musicData: MusicDataUtil
 ) {
     var songs = emptyList<MediaMetadataCompat>()
-    suspend fun fetchMediaData() = withContext(Dispatchers.IO) {
+  //  suspend fun fetchMediaData() = withContext(Dispatchers.IO) {
+     fun fetchMediaData()  {
         state = STATE_INITIALIZING
         val allSongs = musicData.getListOfSongs()
         songs = allSongs!!.map { song ->
             MediaMetadataCompat.Builder()
+                .putString(METADATA_KEY_MEDIA_ID,song.trackUri)
                 .putString(METADATA_KEY_ARTIST, song.artist)
                 .putString(METADATA_KEY_TITLE, song.title)
                 .putString(METADATA_KEY_AUTHOR, song.artist)
@@ -51,6 +54,7 @@ class JsonMusicSource @Inject constructor(
 
     fun asMediaItems() = songs.map { song ->
         val desc = MediaDescriptionCompat.Builder()
+            .setMediaId(song.getString(METADATA_KEY_MEDIA_ID))
             .setMediaUri(song.getString(METADATA_KEY_MEDIA_URI).toUri())
             .setTitle(song.getString(METADATA_KEY_TITLE))
             .setIconUri(song.getString(METADATA_KEY_ALBUM_ART_URI).toUri())
