@@ -15,8 +15,11 @@ import com.example.musicapplab.exoplayer.isPlayEnabled
 import com.example.musicapplab.exoplayer.isPlaying
 import com.example.musicapplab.exoplayer.isPrepared
 import com.example.musicapplab.other.Resource
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class MainViewModel @ViewModelInject constructor(
+@HiltViewModel
+class MainViewModel @Inject constructor(
     private val musicServiceConnection: MusicServiceConnection,
 ) : ViewModel(){
     private val _mediaItems = MutableLiveData<Resource<List<Song>>>()

@@ -26,8 +26,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-      //  mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
-        mainViewModel = MainViewModel(MusicServiceConnection(requireContext()))
+        mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
         setupRecyclerView()
         subscribeToObservers()
 

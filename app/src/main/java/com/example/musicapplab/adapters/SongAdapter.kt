@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -57,7 +59,7 @@ class SongAdapter @Inject constructor(
             setOnClickListener {
                 onItemClickListener?.let { click ->
                     click(song)
-                    Log.i("SongAdapter", "Songs list : ${differ.currentList}")
+                    it.findNavController().navigate(R.id.action_homeFragment_to_songFragment)
                 }
             }
         }
