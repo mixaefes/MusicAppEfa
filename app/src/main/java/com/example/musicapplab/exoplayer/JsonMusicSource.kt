@@ -1,5 +1,6 @@
 package com.example.musicapplab.exoplayer
 
+import android.annotation.SuppressLint
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaBrowserCompat.MediaItem.FLAG_PLAYABLE
 import android.support.v4.media.MediaDescriptionCompat
@@ -11,6 +12,7 @@ import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_AUTHOR
 import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_MEDIA_ID
 import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_MEDIA_URI
 import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_TITLE
+import android.util.Log
 import androidx.core.net.toUri
 import com.example.musicapplab.data.MusicDataUtil
 import com.example.musicapplab.exoplayer.State.*
@@ -52,11 +54,13 @@ class JsonMusicSource @Inject constructor(
         return concatenatingMediaSource
     }
 
+    @SuppressLint("LogNotTimber")
     fun asMediaItems() = songs.map { song ->
         val desc = MediaDescriptionCompat.Builder()
             .setMediaId(song.getString(METADATA_KEY_MEDIA_ID))
             .setMediaUri(song.getString(METADATA_KEY_MEDIA_URI).toUri())
             .setTitle(song.getString(METADATA_KEY_TITLE))
+            .setSubtitle(song.getString(METADATA_KEY_AUTHOR))
             .setIconUri(song.getString(METADATA_KEY_ALBUM_ART_URI).toUri())
             .build()
         MediaBrowserCompat.MediaItem(desc, FLAG_PLAYABLE)

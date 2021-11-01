@@ -2,6 +2,7 @@ package com.example.musicapplab.ui.viewmodels
 
 import android.annotation.SuppressLint
 import android.support.v4.media.MediaBrowserCompat
+import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_MEDIA_ID
 import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
@@ -32,16 +33,18 @@ class MainViewModel @Inject constructor(
     init {
         _mediaItems.postValue(Resource.loading(null))
         musicServiceConnection.subscribe(MEDIA_ROOT_ID, object : MediaBrowserCompat.SubscriptionCallback(){
+            @SuppressLint("LogNotTimber")
             override fun onChildrenLoaded(
                 parentId: String,
                 children: MutableList<MediaBrowserCompat.MediaItem>
             ) {
                 super.onChildrenLoaded(parentId, children)
                 val items = children.map{
+                    Log.i("MainViewModel","${it.description.iconUri} and ${it.description.iconBitmap}")
                     Song(
-                        it.mediaId!!,
                         it.description.title.toString(),
                         it.description.subtitle.toString(),
+                        it.description.iconUri.toString(),
                         it.description.mediaUri.toString(),
                     )
                 }
@@ -64,7 +67,7 @@ fun playOrToggledSong(mediaItem:Song, toggle:Boolean = false){
     val isPrepared = playbackState.value?.isPrepared ?: false
     //to check!!!!!!!
     if(isPrepared && mediaItem.title ==
-        curPlayingSong?.value?.getString(METADATA_KEY_MEDIA_ID)){
+        curPlayingSong?.value?.getString(MediaMetadataCompat.METADATA_KEY_TITLE)){
         playbackState.value?.let { playbackState ->
             when{
                 playbackState.isPlaying -> if(toggle) musicServiceConnection.transportControls.pause()
@@ -74,7 +77,7 @@ fun playOrToggledSong(mediaItem:Song, toggle:Boolean = false){
         }
     } else{
         // to check!!!!
-        musicServiceConnection.transportControls.playFromMediaId(mediaItem.title,null)
+        musicServiceConnection.transportControls.playFromMediaId(mediaItem.trackUri,null)
     }
 }
     override fun onCleared() {

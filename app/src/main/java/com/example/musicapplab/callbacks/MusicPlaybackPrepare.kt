@@ -32,7 +32,7 @@ class MusicPlaybackPrepare(
 
     override fun onPrepareFromMediaId(mediaId: String, playWhenReady: Boolean, extras: Bundle?) {
         jsonMusicSource.whenReady {
-            val itemToPlay = jsonMusicSource.songs.find { mediaId == it.description.mediaId }
+            val itemToPlay = jsonMusicSource.songs.find { mediaId == it.description.mediaUri.toString() }
             playerPrepared(itemToPlay)
         }
     }

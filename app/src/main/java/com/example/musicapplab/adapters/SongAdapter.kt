@@ -15,6 +15,8 @@ import com.example.musicapplab.R
 import com.example.musicapplab.data.Song
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.list_item.view.*
+import timber.log.Timber
+import timber.log.Timber.log
 
 class SongAdapter @Inject constructor(
     private val glide: RequestManager
@@ -23,16 +25,14 @@ class SongAdapter @Inject constructor(
 
     private val diffCallback = object : DiffUtil.ItemCallback<Song>() {
         override fun areItemsTheSame(oldItem: Song, newItem: Song): Boolean {
-          //  return oldItem.trackUri == newItem.trackUri
-            return oldItem == newItem
+            return oldItem.trackUri == newItem.trackUri
         }
 
         override fun areContentsTheSame(oldItem: Song, newItem: Song): Boolean {
-           // return oldItem.hashCode() == newItem.hashCode()
-            return oldItem == newItem
+            return oldItem.hashCode() == newItem.hashCode()
         }
     }
-   private val differ = AsyncListDiffer(this, diffCallback)
+    private val differ = AsyncListDiffer(this, diffCallback)
 
     var songs: List<Song>
         get() = differ.currentList
@@ -51,14 +51,17 @@ class SongAdapter @Inject constructor(
     @SuppressLint("LogNotTimber")
     override fun onBindViewHolder(holder: SongViewHolder, position: Int) {
         val song = songs[position]
+        Log.i("onBindViewHolder","songs list: $songs")
         holder.itemView.apply {
             tvPrimary.text = song.title
             tvSecondary.text = song.artist
             glide.load(song.bitmapUri).into(ivItemImage)
+            Log.i("SONG ADAPTER", "image = :${song.bitmapUri}")
 
             setOnClickListener {
                 onItemClickListener?.let { click ->
                     click(song)
+                    Log.i("Song Adapter","item clicked $song")
                     it.findNavController().navigate(R.id.action_homeFragment_to_songFragment)
                 }
             }
@@ -67,7 +70,7 @@ class SongAdapter @Inject constructor(
 
     private var onItemClickListener: ((Song) -> Unit)? = null
 
-    fun setOnItemClickListener(listener: (Song) -> Unit){
+    fun setOnItemClickListener(listener: (Song) -> Unit) {
         onItemClickListener = listener
     }
 

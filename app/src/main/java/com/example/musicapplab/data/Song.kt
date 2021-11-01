@@ -9,5 +9,5 @@ data class Song(
     val artist: String,
     val bitmapUri: String,
     val trackUri: String,
-   // val duration: Int
+    //val duration: Int
 )

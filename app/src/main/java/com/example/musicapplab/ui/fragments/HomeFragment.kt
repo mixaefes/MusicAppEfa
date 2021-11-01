@@ -1,6 +1,8 @@
 package com.example.musicapplab.ui.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -9,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.musicapplab.R
 import com.example.musicapplab.adapters.SongAdapter
+import com.example.musicapplab.data.Song
 import com.example.musicapplab.exoplayer.MusicServiceConnection
 import com.example.musicapplab.other.Status
 import com.example.musicapplab.ui.viewmodels.MainViewModel
@@ -24,14 +27,15 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     @Inject
     lateinit var songAdapter: SongAdapter
 
+    @SuppressLint("LogNotTimber")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
         setupRecyclerView()
         subscribeToObservers()
-
         songAdapter.setOnItemClickListener {
             mainViewModel.playOrToggledSong(it)
+            Log.i("HomeFragment", "songdapter song $it")
         }
     }
 
