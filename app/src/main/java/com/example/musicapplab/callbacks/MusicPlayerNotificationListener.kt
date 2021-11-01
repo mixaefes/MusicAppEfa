@@ -3,6 +3,7 @@ package com.example.musicapplab.callbacks
 import android.app.Notification
 import android.content.Intent
 import androidx.core.content.ContextCompat
+import com.example.musicapplab.Constants.CHANNEL_ID
 import com.example.musicapplab.Constants.NOTIFICATION_CHANNEL_ID
 import com.example.musicapplab.exoplayer.MusicService
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
@@ -31,7 +32,7 @@ class MusicPlayerNotificationListener(
                     this,
                     Intent(applicationContext, this::class.java)
                 )
-                startForeground(NOTIFICATION_CHANNEL_ID,notification)
+                startForeground(CHANNEL_ID,notification)
                 isForegroundService = true
             }
         }

@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.MediaSessionCompat
+import androidx.core.app.NotificationManagerCompat.IMPORTANCE_HIGH
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
@@ -27,10 +28,15 @@ class MusicNotificationManager(
         val mediaSessionController = MediaControllerCompat(context,sessionToken)
         notificationManager = PlayerNotificationManager.Builder(
             context,
-            NOTIFICATION_CHANNEL_ID,
-            CHANNEL_ID
+            CHANNEL_ID,
+            NOTIFICATION_CHANNEL_ID
         ).apply {
-            setSmallIconResourceId(R.drawable.ic_baseline_music_note_24)
+           setSmallIconResourceId(R.drawable.ic_baseline_music_note_24)
+            setChannelNameResourceId(R.string.channel_id)
+            setChannelDescriptionResourceId(R.string.channel_id)
+            setChannelImportance(IMPORTANCE_HIGH)
+            setMediaDescriptionAdapter(DescriptionAdapter(mediaSessionController))
+            setNotificationListener(notificationListener)
         }.build()
     }
     fun showNotification(player: Player){
