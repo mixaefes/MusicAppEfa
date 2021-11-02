@@ -1,18 +1,20 @@
-package com.example.musicapplab
+package com.example.musicapplab.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import androidx.core.view.isVisible
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.RequestManager
-import com.example.musicapplab.data.MusicDataUtil
+import com.example.musicapplab.R
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import kotlinx.android.synthetic.main.activity_main.*
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    @Inject
-    lateinit var glide: RequestManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        }
     }
-}
