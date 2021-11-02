@@ -15,8 +15,6 @@ import com.example.musicapplab.R
 import com.example.musicapplab.data.Song
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.list_item.view.*
-import timber.log.Timber
-import timber.log.Timber.log
 
 class SongAdapter @Inject constructor(
     private val glide: RequestManager
@@ -48,20 +46,16 @@ class SongAdapter @Inject constructor(
         )
     }
 
-    @SuppressLint("LogNotTimber")
     override fun onBindViewHolder(holder: SongViewHolder, position: Int) {
         val song = songs[position]
-        Log.i("onBindViewHolder","songs list: $songs")
         holder.itemView.apply {
             tvPrimary.text = song.title
             tvSecondary.text = song.artist
             glide.load(song.bitmapUri).into(ivItemImage)
-            Log.i("SONG ADAPTER", "image = :${song.bitmapUri}")
 
             setOnClickListener {
                 onItemClickListener?.let { click ->
                     click(song)
-                    Log.i("Song Adapter","item clicked $song")
                     it.findNavController().navigate(R.id.action_homeFragment_to_songFragment)
                 }
             }

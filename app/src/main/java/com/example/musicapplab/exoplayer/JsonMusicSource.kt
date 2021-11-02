@@ -27,7 +27,6 @@ class JsonMusicSource @Inject constructor(
     private val musicData: MusicDataUtil
 ) {
     var songs = emptyList<MediaMetadataCompat>()
-  //  suspend fun fetchMediaData() = withContext(Dispatchers.IO) {
      fun fetchMediaData()  {
         state = STATE_INITIALIZING
         val allSongs = musicData.getListOfSongs()

@@ -27,7 +27,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     @Inject
     lateinit var songAdapter: SongAdapter
 
-    @SuppressLint("LogNotTimber")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
@@ -35,7 +34,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         subscribeToObservers()
         songAdapter.setOnItemClickListener {
             mainViewModel.playOrToggledSong(it)
-            Log.i("HomeFragment", "songdapter song $it")
         }
     }
 

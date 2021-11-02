@@ -25,8 +25,6 @@ class MainViewModel @Inject constructor(
 ) : ViewModel(){
     private val _mediaItems = MutableLiveData<Resource<List<Song>>>()
     val mediaItems: LiveData<Resource<List<Song>>> = _mediaItems
-    val isConnected = musicServiceConnection.isConnected
-    val networkError = musicServiceConnection.networkError
     val curPlayingSong = musicServiceConnection.curPlayingSong
     val playbackState = musicServiceConnection.playbackState
 
@@ -60,12 +58,8 @@ class MainViewModel @Inject constructor(
         musicServiceConnection.transportControls.skipToPrevious()
     }
 
-    fun seekTo(position:Long){
-        musicServiceConnection.transportControls.seekTo(position)
-    }
 fun playOrToggledSong(mediaItem:Song, toggle:Boolean = false){
     val isPrepared = playbackState.value?.isPrepared ?: false
-    //to check!!!!!!!
     if(isPrepared && mediaItem.title ==
         curPlayingSong?.value?.getString(MediaMetadataCompat.METADATA_KEY_TITLE)){
         playbackState.value?.let { playbackState ->
@@ -76,7 +70,6 @@ fun playOrToggledSong(mediaItem:Song, toggle:Boolean = false){
             }
         }
     } else{
-        // to check!!!!
         musicServiceConnection.transportControls.playFromMediaId(mediaItem.trackUri,null)
     }
 }
